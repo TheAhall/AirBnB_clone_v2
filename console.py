@@ -323,7 +323,8 @@ def do_create(self, args):
                     return
                 if not att_val:  # check for att_value
                     print("** value missing **")
-                    return
+   
+   return
                 # type cast as necessary
                 if att_name in HBNBCommand.types:
                     att_val = HBNBCommand.types[att_name](att_val)
