@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance = classes[args[0]](**new_list)
         else:
             print("** class doesn't exist **")
-            return False
+            return
         print(new_instance.id)
         new_instance.save()
 
