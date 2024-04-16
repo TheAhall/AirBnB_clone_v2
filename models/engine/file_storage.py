@@ -33,14 +33,6 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
         classes = {
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
@@ -56,17 +48,8 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """
-         Delete obj from __objects if it’s inside - if obj is equal to None,
-           the method should not do anything
-        """
-        if obj is None:
-            return
-        obj_to_del = f"{obj.__class__.__name__}.{obj.id}"
-
-        try:
-            del FileStorage.__objects[obj_to_del]
-        except AttributeError:
-            pass
-        except KeyboardInterrupt:
-            pass
+        """Deletes obj from __objects if it's inside"""
+        if obj is not None:
+            key = obj.__class__.__name__ + '.' + obj.id
+            if key in FileStorage.__objects:
+                del FileStorage.__objects[key]
