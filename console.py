@@ -46,6 +46,7 @@ class HBNBCommand(cmd.Cmd):
         # scan for general formating - i.e '.', '(', ')'
         if not ('.' in line and '(' in line and ')' in line):
             return line
+
         try:  # parse line left to right
             pline = line[:]  # parsed line
 
@@ -113,39 +114,19 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class with given parameters"""
-        if not args:
+        """Creates a new instance of a class"""
+        args = arg.split()
+        if len(args) == 0:
             print("** class name missing **")
-            return
-        elif args.split()[0] not in self.classes:
+            return False
+        if args[0] in classes:
+            new_dict = self._key_value_parser(args[1:])
+            instance = classes[args[0]](**new_dict)
+        else:
             print("** class doesn't exist **")
-            return
-
-        args_list = args.split()
-        class_name = args_list[0]
-        kwargs = {}
-
-        # Parsing the parameters
-        for param in args_list[1:]:
-            if "=" in param:
-                key, value = param.split("=")
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1].replace("_", " ")
-                elif "." in value:
-                    try:
-                        value = float(value)
-                    except ValueError:
-                        pass
-                else:
-                    try:
-                        value = int(value)
-                    except ValueError:
-                        pass
-                kwargs[key] = value
-
-        new_instance = self.classes[class_name](**kwargs)
-        new_instance.save()
-        print(new_instance.id)
+            return False
+        print(instance.id)
+        instance.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -326,8 +307,7 @@ class HBNBCommand(cmd.Cmd):
                     return
                 if not att_val:  # check for att_value
                     print("** value missing **")
-   
-   return
+                    return
                 # type cast as necessary
                 if att_name in HBNBCommand.types:
                     att_val = HBNBCommand.types[att_name](att_val)
@@ -343,4 +323,6 @@ class HBNBCommand(cmd.Cmd):
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
 if __name__ == "__main__":
-    HBNBCommand().cmdloop()
+
+
+	HBNBCommand().cmdloop()
