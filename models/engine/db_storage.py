@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This module defines the DBStorage engine for hbnb clone"""
+from sqlalchemy import create_engine
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
