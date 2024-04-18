@@ -4,8 +4,13 @@ from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    
-    __tablename__ = "amenities"
+     """ Amenity class to store amenity information """
+    __tablename__ = 'amenities'
+
     name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary="place_amenity",
-                                   viewonly=False)
+
+    place_amenities = Table('place_amenities', Base.metadata,
+                            Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+                            Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
+
+    places = relationship("Place", secondary=place_amenities, back_populates="amenities")
